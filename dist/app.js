@@ -1,6 +1,6 @@
 const $=id=>document.getElementById(id),ids=['vram','params','quant','context','offload','headroom','layers','heads','dim','cache','overhead'];
 let selectedModel='';let mode='gpu';const defaults=Object.fromEntries(ids.map(id=>[id,$(id).value]));
-function state(){const s=Object.fromEntries(ids.map(id=>[id,id==='quant'?$(id).value:Number($(id).value)]));const m=CATALOG.find(m=>m.id===selectedModel);if(m&&s.params===m.params&&s.quant===m.quant)s.weightGiB=m.gb*1e9/2**30;if(typeof hfState==='function')return hfState(s);return s}
+function state(){const s=Object.fromEntries(ids.map(id=>[id,id==='quant'?$(id).value:Number($(id).value)]));if(typeof hfState==='function')return hfState(s);return s}
 const quantNotes={
  Q3_K_M:'Q3_K_M: a heavily compressed mixed-precision format. We budget about 3.9 bits per weight. It saves memory relative to Q4_K_M, with greater risk of quality loss.',
  Q4_0:'Q4_0: roughly 4-bit weights in simple blocks, about 4.5 bits per weight including scales. Usually a little smaller than Q4_K_M. Quality depends on the model and how it was quantized; Q4_0 alone does not imply QAT.',
@@ -8,6 +8,7 @@ const quantNotes={
  Q5_K_M:'Q5_K_M: roughly 5-bit weights with mixed tensor precisions, budgeted at about 5.7 bits per weight. More weight memory than Q4_K_M, generally retaining more of the original precision; test whether the quality gain matters for your task.',
  Q6_K:'Q6_K: roughly 6-bit weights, budgeted at about 6.6 bits per weight including block metadata. More weight memory than Q5_K_M, with less compression error in general. Speed depends on hardware and kernels.',
  Q8_0:'Q8_0: roughly 8-bit weights, about 8.5 bits per weight including scales. Uses substantially more weight memory than 4-bit formats and retains more precision. A quality or speed improvement is not guaranteed for your task.',
+ FILE:'This GGUF uses a format outside the named presets. Weight memory comes from the selected file size; the format alone does not establish quality or speed.',
  FP16:'FP16: 16-bit floating-point weights. This is the highest weight precision offered here and uses about twice the weight memory of Q8_0. It does not increase context capacity or guarantee better reasoning.'
 };
 const fmt=n=>n.toFixed(1),colors=['#285d4a','#84a47c','#d4b77a','#d3dccd'];
@@ -22,30 +23,16 @@ function render(){const s=state();if(ids.some(id=>id!=='quant'&&(!$(id).checkVal
  $('quality').textContent=`${s.params}B describes learned capacity, not an intelligence score. ${s.quant} ${s.quant==='FP16'?'retains the baseline storage precision.':'compresses the learned weights; lower precision can lose detail and reasoning accuracy.'} Compare quality within model families and test your own tasks.`;
  $('memory').textContent=`${(s.context/1024).toFixed(0)}K tokens is room for instructions, conversation, documents, and output together. At the assumed architecture, its full KV cache is ${fmt(r.kv)} GiB before offload. More context lets you keep a longer conversation, provide a larger document or more code, compare sources together, and leave room for a longer answer. It helps when relevant material would otherwise be dropped or summarized. If your exchange already fits comfortably, unused space does not improve answers or increase intelligence.`;
  $('speed').textContent=`${s.offload<100?'Some computation moves to the CPU, often reducing speed.':'Full GPU offload avoids CPU layer work if the allocation fits.'} Longer active prompts take more processing and attention work and can slow responses. Raising the limit from 8K to 16K does not necessarily slow a short exchange: actual token use, cache allocation, and GPU placement matter. A runtime that reserves more memory may offload work to the CPU or spill, causing a sharp slowdown even on a short prompt. Quantization can help speed through lower memory traffic, but kernels and hardware matter. No tokens/sec prediction is implied.`;
- renderCatalog(s);if(typeof renderHF==='function')renderHF(s);
+ if(typeof renderHF==='function')renderHF(s);
  $('recommendations').hidden=mode!=='gpu';if(mode==='gpu')renderRanges(s);
- try{localStorage.setItem('local-ai-setup',JSON.stringify({s,mode,selectedModel}))}catch{}
+ try{localStorage.setItem('local-ai-setup',JSON.stringify({s,mode,hfSelection:HF_SELECTION}))}catch{}
 }
 function renderRanges(s){let rows=[];for(const q of ['Q4_0','Q4_K_M','Q5_K_M','Q8_0'])for(const context of [4096,8192,32768]){let max=0;for(let p=1;p<=72;p+=.5)if(estimate({...s,weightGiB:undefined,params:p,quant:q,context,offload:100}).band==='Comfortable')max=p;rows.push(`<tr><td>${q}</td><td>${context/1024}K</td><td>${max?`1–${max}B`:'No fit ≥1B'}</td><td>${max?`<button data-p="${max}" data-q="${q}" data-c="${context}">Try ${max}B ↗</button>`:'—'}</td></tr>`)}$('ranges').innerHTML='<table><thead><tr><th>Precision</th><th>Context</th><th>Comfortable range</th><th>Explore</th></tr></thead><tbody>'+rows.join('')+'</tbody></table>'}
-ids.forEach(id=>$(id).addEventListener('input',()=>{if(['params','quant','layers','heads','dim'].includes(id))selectedModel='';render()}));
+ids.forEach(id=>$(id).addEventListener('input',()=>{if(['params','quant','layers','heads','dim'].includes(id)){selectedModel='';HF_SELECTION=null;if($('quant').value==='FILE')$('quant').value='Q4_K_M';}render()}));
 function setMode(m){mode=m;document.querySelectorAll('[data-mode]').forEach(b=>{b.classList.toggle('active',b.dataset.mode===m);b.setAttribute('aria-pressed',b.dataset.mode===m)});render()}
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
 
 document.querySelectorAll('[data-exp]').forEach(b=>b.onclick=()=>{if(b.dataset.exp==='context'){$('context').value=$('context').value==='131072'?'8192':'131072';b.textContent=$('context').value==='131072'?'Return to 8K context ↙':'8K → 128K context ↗'}if(b.dataset.exp==='quant'){$('quant').value=$('quant').value==='Q8_0'?'Q4_K_M':'Q8_0';b.textContent=$('quant').value==='Q8_0'?'Return to Q4 precision ↙':'Q4 → Q8 precision ↗'}if(b.dataset.exp==='offload'){$('offload').value=$('offload').value==='50'?'100':'50'}render()});
  $('ranges').onclick=e=>{const b=e.target.closest('[data-p]');if(!b)return;HF_SELECTION=null;selectedModel='';$('params').value=b.dataset.p;$('quant').value=b.dataset.q;$('context').value=b.dataset.c;$('offload').value=100;render();$('params').focus()};
  $('reset').onclick=()=>{HF_SELECTION=null;selectedModel='';ids.forEach(id=>$(id).value=defaults[id]);setMode('gpu')};
-CATALOG.forEach(m=>$('catalogSelect').add(new Option(`${m.name} · ${m.quant}`,m.id)));
-function renderCatalog(s){
- $('catalogSelect').value=selectedModel;
- const current=CATALOG.find(m=>m.id===selectedModel);
- $('catalogSelection').textContent=current?`${current.name} · ${current.quant}. Using ~${current.gb} GB download size as the weight estimate; ${current.layers} layers, ${current.heads} KV heads, head dimension ${current.dim}. GPU, context, offload, cache precision, runtime overhead, and reserve are yours to explore. Architecture/size edits switch to Custom.`:'Custom configuration. Presets load model size, weight format, and cache architecture; GPU and reserve stay unchanged.';
- const filter=$('catalogFilter').value;let shown=0;
- $('catalogCards').innerHTML=CATALOG.map(m=>{const r=estimate(catalogConfig(s,m)),supported=s.context<=m.maxContext;if(filter!=='all'&&(!supported||r.band==='Spill likely'||filter==='comfortable'&&r.band!=='Comfortable'))return '';shown++;return `<article class="catalog-card"><h3>${m.name} <small>· ${m.quant}</small></h3><p>${supported?r.band:'Context above verified preset limit'} · <b>${fmt(r.total)} GiB VRAM</b> · ${fmt(r.free)} GiB remaining<br>${m.params}B parameters (approx.) · ${m.gb.toFixed(2)} GB download</p><p>Text chat and instruction following. Architecture verified to 32K without extra context-scaling setup. Larger size does not guarantee better answers.</p><div><button data-catalog="${m.id}">Try this configuration ↗</button> <a href="${m.download}" target="_blank" rel="noreferrer">GGUF file ↗</a> · <a href="${m.source}" target="_blank" rel="noreferrer">Model card</a> · <a href="${m.source}/blob/main/config.json" target="_blank" rel="noreferrer">Architecture</a></div></article>`}).join('');
- if(!shown)$('catalogCards').innerHTML='<p class="empty">No catalog options meet this filter at your current settings. Try a smaller context or choose “All six options” to inspect the tradeoffs. This small list does not mean no other models fit.</p>';
-}
-function applyCatalog(id){HF_SELECTION=null;const m=CATALOG.find(m=>m.id===id);if(!m){selectedModel='';render();return}selectedModel=id;for(const key of ['params','quant','layers','heads','dim'])$(key).value=m[key];if(Number($('context').value)>m.maxContext)$('context').value=m.maxContext;render();$('catalogSelection').scrollIntoView({behavior:'smooth',block:'center'})}
- $('catalogSelect').onchange=e=>applyCatalog(e.target.value);
- $('catalogFilter').onchange=render;
- $('catalogCards').onclick=e=>{const b=e.target.closest('[data-catalog]');if(b)applyCatalog(b.dataset.catalog)};
-
-try{const saved=JSON.parse(localStorage.getItem('local-ai-setup'));if(saved){selectedModel=CATALOG.some(m=>m.id===saved.selectedModel)?saved.selectedModel:'';ids.forEach(id=>{if(saved.s[id]!==undefined)$(id).value=saved.s[id]})}}catch{}setMode(mode);
+try{const saved=JSON.parse(localStorage.getItem('local-ai-setup'));if(saved){if(saved.hfSelection&&Number.isFinite(saved.hfSelection.bytes)&&saved.hfSelection.bytes>0)HF_SELECTION=saved.hfSelection;ids.forEach(id=>{if(saved.s[id]!==undefined)$(id).value=saved.s[id]})}}catch{}setMode(mode);
