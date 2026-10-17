@@ -1,8 +1,17 @@
 const $=id=>document.getElementById(id),ids=['vram','params','quant','context','offload','headroom','layers','heads','dim','cache','overhead'];
 let selectedModel='';let mode='gpu';const defaults=Object.fromEntries(ids.map(id=>[id,$(id).value]));
 function state(){const s=Object.fromEntries(ids.map(id=>[id,id==='quant'?$(id).value:Number($(id).value)]));const m=CATALOG.find(m=>m.id===selectedModel);if(m&&s.params===m.params&&s.quant===m.quant)s.weightGiB=m.gb*1e9/2**30;return s}
+const quantNotes={
+ Q3_K_M:'Q3_K_M: a heavily compressed mixed-precision format. We budget about 3.9 bits per weight. It saves memory relative to Q4_K_M, with greater risk of quality loss.',
+ Q4_0:'Q4_0: roughly 4-bit weights in simple blocks, about 4.5 bits per weight including scales. Usually a little smaller than Q4_K_M. Quality depends on the model and how it was quantized; Q4_0 alone does not imply QAT.',
+ Q4_K_M:'Q4_K_M: roughly 4-bit weights with mixed tensor precisions, budgeted at about 4.85 bits per weight. It uses a little more memory than Q4_0 and often preserves quality better for conventional post-training conversions.',
+ Q5_K_M:'Q5_K_M: roughly 5-bit weights with mixed tensor precisions, budgeted at about 5.7 bits per weight. More weight memory than Q4_K_M, generally retaining more of the original precision; test whether the quality gain matters for your task.',
+ Q6_K:'Q6_K: roughly 6-bit weights, budgeted at about 6.6 bits per weight including block metadata. More weight memory than Q5_K_M, with less compression error in general. Speed depends on hardware and kernels.',
+ Q8_0:'Q8_0: roughly 8-bit weights, about 8.5 bits per weight including scales. Uses substantially more weight memory than 4-bit formats and retains more precision. A quality or speed improvement is not guaranteed for your task.',
+ FP16:'FP16: 16-bit floating-point weights. This is the highest weight precision offered here and uses about twice the weight memory of Q8_0. It does not increase context capacity or guarantee better reasoning.'
+};
 const fmt=n=>n.toFixed(1),colors=['#285d4a','#84a47c','#d4b77a','#d3dccd'];
-function render(){const s=state();if(ids.some(id=>id!=='quant'&&(!$(id).checkValidity()||$(id).value===''))){$('verdict').textContent='Enter valid values in the advanced assumptions to update the estimate.';return}const r=estimate(s);
+function render(){const s=state();if(ids.some(id=>id!=='quant'&&(!$(id).checkValidity()||$(id).value===''))){$('verdict').textContent='Enter valid values in the advanced assumptions to update the estimate.';return}const r=estimate(s);$('quantExplanation').textContent=quantNotes[s.quant];
  $('vramO').textContent=s.vram+' GiB';$('vramSelected').textContent=s.vram+' GiB selected';$('paramsO').textContent=s.params+'B';$('offloadO').textContent=s.offload+'%';$('headroomO').textContent=s.headroom+' GiB';
  $('total').textContent=fmt(r.total);$('required').textContent=fmt(r.required)+' GiB including desired reserve';$('badge').textContent=r.band;$('badge').className=r.band==='Tight'?'tight':r.band==='Spill likely'?'spill':'';
  const parts=[r.gpuWeights,r.gpuKV,s.overhead,Math.max(0,r.free)],labels=['Model weights','KV cache','Runtime / buffers','Free memory'];const scale=Math.max(s.vram,r.total);
