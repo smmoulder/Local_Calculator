@@ -27,3 +27,9 @@ Q4/Q8 denote approximate weight bit precision; 4K/8K context denotes token count
 ## Publishing
 
 GitHub is the project source record. The existing private Sites deployment uses a separate source mirror and hosting identity. Commit changes here and synchronize the same application files to that mirror before publishing. Hosting identity and credentials are intentionally excluded from this repository; no automatic GitHub-to-Sites deployment is configured.
+
+## Live Hugging Face discovery
+
+The discovery panel searches public GGUF repositories through the Hugging Face Hub API, sorted by downloads with pagination. Searches and metadata requests go directly from the browser to Hugging Face, without credentials. No model weight downloads occur inside the calculator. Internet access and Hugging Face CORS availability are required; the static starter catalog remains usable offline.
+
+Inspecting a repository lists supported, complete GGUF files and combines split-shard sizes. Projectors and unsupported quantizations are excluded with an explanation. Selecting a file uses its published byte size for weight memory. Dense full-attention Llama/Qwen2 configurations can supply cache dimensions; other architectures or missing metadata retain the current cache assumptions and are marked provisional. GGUF presence alone is not runtime compatibility verification. The discovery selection is session-only; refresh restores calculator controls but not the live file selection.
