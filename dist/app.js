@@ -1,5 +1,5 @@
 const $=id=>document.getElementById(id),ids=['vram','params','quant','context','offload','headroom','layers','heads','dim','cache','overhead'];
-let mode='model';const defaults=Object.fromEntries(ids.map(id=>[id,$(id).value]));
+let mode='gpu';const defaults=Object.fromEntries(ids.map(id=>[id,$(id).value]));
 function state(){return Object.fromEntries(ids.map(id=>[id,id==='quant'?$(id).value:Number($(id).value)]))}
 const fmt=n=>n.toFixed(1),colors=['#285d4a','#84a47c','#d4b77a','#d3dccd'];
 function render(){const s=state();if(ids.some(id=>id!=='quant'&&(!$(id).checkValidity()||$(id).value===''))){$('verdict').textContent='Enter valid values in the advanced assumptions to update the estimate.';return}const r=estimate(s);
@@ -23,5 +23,5 @@ document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>setMode(b.data
 document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{$('vram').value=b.dataset.v;render()});
 document.querySelectorAll('[data-exp]').forEach(b=>b.onclick=()=>{if(b.dataset.exp==='context'){$('context').value=$('context').value==='131072'?'8192':'131072';b.textContent=$('context').value==='131072'?'Return to 8K context ↙':'8K → 128K context ↗'}if(b.dataset.exp==='quant'){$('quant').value=$('quant').value==='Q8_0'?'Q4_K_M':'Q8_0';b.textContent=$('quant').value==='Q8_0'?'Return to Q4 precision ↙':'Q4 → Q8 precision ↗'}if(b.dataset.exp==='offload'){$('offload').value=$('offload').value==='50'?'100':'50'}render()});
  $('ranges').onclick=e=>{const b=e.target.closest('[data-p]');if(!b)return;$('params').value=b.dataset.p;$('quant').value=b.dataset.q;$('context').value=b.dataset.c;$('offload').value=100;render();$('params').focus()};
- $('reset').onclick=()=>{ids.forEach(id=>$(id).value=defaults[id]);setMode('model')};
-try{const saved=JSON.parse(localStorage.getItem('local-ai-setup'));if(saved){ids.forEach(id=>{if(saved.s[id]!==undefined)$(id).value=saved.s[id]});mode=saved.mode==='gpu'?'gpu':'model'}}catch{}setMode(mode);
+ $('reset').onclick=()=>{ids.forEach(id=>$(id).value=defaults[id]);setMode('gpu')};
+try{const saved=JSON.parse(localStorage.getItem('local-ai-setup'));if(saved){ids.forEach(id=>{if(saved.s[id]!==undefined)$(id).value=saved.s[id]})}}catch{}setMode(mode);
