@@ -3,7 +3,7 @@ let selectedModel='';let mode='gpu';const defaults=Object.fromEntries(ids.map(id
 function state(){const s=Object.fromEntries(ids.map(id=>[id,id==='quant'?$(id).value:Number($(id).value)]));const m=CATALOG.find(m=>m.id===selectedModel);if(m&&s.params===m.params&&s.quant===m.quant)s.weightGiB=m.gb*1e9/2**30;return s}
 const fmt=n=>n.toFixed(1),colors=['#285d4a','#84a47c','#d4b77a','#d3dccd'];
 function render(){const s=state();if(ids.some(id=>id!=='quant'&&(!$(id).checkValidity()||$(id).value===''))){$('verdict').textContent='Enter valid values in the advanced assumptions to update the estimate.';return}const r=estimate(s);
- $('vramO').textContent=s.vram+' GiB';$('paramsO').textContent=s.params+'B';$('offloadO').textContent=s.offload+'%';$('headroomO').textContent=s.headroom+' GiB';
+ $('vramO').textContent=s.vram+' GiB';$('vramSelected').textContent=s.vram+' GiB selected';$('paramsO').textContent=s.params+'B';$('offloadO').textContent=s.offload+'%';$('headroomO').textContent=s.headroom+' GiB';
  $('total').textContent=fmt(r.total);$('required').textContent=fmt(r.required)+' GiB including desired reserve';$('badge').textContent=r.band;$('badge').className=r.band==='Tight'?'tight':r.band==='Spill likely'?'spill':'';
  const parts=[r.gpuWeights,r.gpuKV,s.overhead,Math.max(0,r.free)],labels=['Model weights','KV cache','Runtime / buffers','Free memory'];const scale=Math.max(s.vram,r.total);
  $('bar').innerHTML=parts.map((v,i)=>`<div title="${labels[i]}: ${fmt(v)} GiB" style="width:${v/scale*100}%;background:${colors[i]}"></div>`).join('');
@@ -21,7 +21,7 @@ function renderRanges(s){let rows=[];for(const q of ['Q4_0','Q4_K_M','Q5_K_M','Q
 ids.forEach(id=>$(id).addEventListener('input',()=>{if(['params','quant','layers','heads','dim'].includes(id))selectedModel='';render()}));
 function setMode(m){mode=m;document.querySelectorAll('[data-mode]').forEach(b=>{b.classList.toggle('active',b.dataset.mode===m);b.setAttribute('aria-pressed',b.dataset.mode===m)});render()}
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
-document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{$('vram').value=b.dataset.v;render()});
+
 document.querySelectorAll('[data-exp]').forEach(b=>b.onclick=()=>{if(b.dataset.exp==='context'){$('context').value=$('context').value==='131072'?'8192':'131072';b.textContent=$('context').value==='131072'?'Return to 8K context ↙':'8K → 128K context ↗'}if(b.dataset.exp==='quant'){$('quant').value=$('quant').value==='Q8_0'?'Q4_K_M':'Q8_0';b.textContent=$('quant').value==='Q8_0'?'Return to Q4 precision ↙':'Q4 → Q8 precision ↗'}if(b.dataset.exp==='offload'){$('offload').value=$('offload').value==='50'?'100':'50'}render()});
  $('ranges').onclick=e=>{const b=e.target.closest('[data-p]');if(!b)return;selectedModel='';$('params').value=b.dataset.p;$('quant').value=b.dataset.q;$('context').value=b.dataset.c;$('offload').value=100;render();$('params').focus()};
  $('reset').onclick=()=>{selectedModel='';ids.forEach(id=>$(id).value=defaults[id]);setMode('gpu')};
