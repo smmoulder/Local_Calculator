@@ -194,3 +194,8 @@ footer{max-width:1440px;margin:0 auto;padding:24px 28px 40px;border-top:1px soli
 #dxStatus:empty{display:none}
 .result .sectionhead h2{display:flex;gap:10px;align-items:center}
 [hidden]{display:none!important}
+
+/* recommendations */
+.recs{border-color:var(--accent-dim)}
+.recs .idx{border-radius:999px}
+.rec-card{background:var(--bg2)}
