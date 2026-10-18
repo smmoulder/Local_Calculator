@@ -201,3 +201,27 @@ footer{max-width:1440px;margin:0 auto;padding:24px 28px 40px;border-top:1px soli
 .rec-card{background:var(--bg2)}
 .hf-unload{margin-left:.5rem;padding:.15rem .6rem;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--dim);font:inherit;font-size:.8rem;cursor:pointer}
 .hf-unload:hover{color:var(--accent);border-color:var(--accent-dim)}
+
+/* Theme choice: layout is shared; semantic colors change with the palette. */
+:root{color-scheme:dark}
+:root[data-theme="light"]{
+ color-scheme:light;--bg:#f3f6f5;--bg2:#ffffff;--panel:#ffffff;--panel2:#f8fbfa;
+ --line:#dce5e1;--line2:#bdcdc6;--text:#1c3029;--dim:#4d6359;--faint:#61756b;
+ --accent:#087952;--accent-dim:#b1d8c5;--cyan:#096c9b;--amber:#946000;--red:#b62b35;
+ --c-weights:#14885e;--c-kv:#2588b9;--c-runtime:#c48a26;--c-free:#dbe5df;
+}
+.brand-stack{display:flex;flex-direction:column;align-items:flex-start;gap:5px;flex-shrink:0}
+.theme-toggle{display:inline-flex;gap:2px;padding:2px;border:1px solid var(--line2);border-radius:999px;background:var(--bg2)}
+.theme-toggle button{border:0;background:transparent;color:var(--dim);padding:3px 9px;border-radius:999px;font:11px var(--mono);cursor:pointer}
+.theme-toggle button[aria-pressed="true"]{background:var(--accent);color:var(--bg)}
+.theme-toggle button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+html[data-theme="light"] .topbar{background:rgba(243,246,245,.94)}
+html[data-theme="light"] .mini{background:rgba(255,255,255,.97);box-shadow:0 8px 28px -14px rgba(20,50,35,.25)}
+html[data-theme="light"] .hero h1 em,html[data-theme="light"] .brand .logo,html[data-theme="light"] .result .total>span{text-shadow:none}
+html[data-theme="light"] input[type=range]::-webkit-slider-thumb{box-shadow:0 0 0 3px rgba(8,121,82,.1)}
+html[data-theme="light"] .primary{box-shadow:0 3px 12px -5px rgba(8,121,82,.3)}
+html[data-theme="light"] .result{box-shadow:0 10px 32px -24px rgba(20,50,35,.25)}
+.col-side{top:100px;max-height:calc(100vh - 116px)}
+html{scroll-padding-top:110px}
+@media(max-width:1023px){.col-side{max-height:none}}
+@media(max-width:640px){html{scroll-padding-top:160px}}

@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Local AI Workbench · VRAM calculator</title><meta name="description" content="Estimate whether a local GGUF model fits your GPU, and understand every memory tradeoff."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Local AI Workbench · VRAM calculator</title><meta name="description" content="Estimate whether a local GGUF model fits your GPU, and understand every memory tradeoff."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><script src="theme.js"></script></head>
 <body>
 <header class="topbar">
- <a class="brand" href="#"><span class="logo">◈</span><span>LOCAL_AI<b>/WORKBENCH</b></span></a>
+ <div class="brand-stack"><a class="brand" href="#"><span class="logo">◈</span><span>LOCAL_AI<b>/WORKBENCH</b></span></a><div class="theme-toggle" role="group" aria-label="Color theme"><button type="button" data-theme-choice="light" aria-pressed="false">☀ Light</button><button type="button" data-theme-choice="dark" aria-pressed="true">☾ Dark</button></div></div>
  <nav class="modes" aria-label="Calculator mode"><button class="active" data-mode="gpu"><span>01</span>I own this GPU</button><button data-mode="model"><span>02</span>I found a model</button></nav>
  <button id="reset" class="ghost">Reset ↺</button>
 </header>
