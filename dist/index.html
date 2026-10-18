@@ -13,7 +13,7 @@
 <div class="col-main">
 
 <section class="panel controls">
- <div class="sectionhead"><h2><span class="idx">A</span>Your setup</h2><div class="head-actions"><span class="tag live">● LIVE</span><button type="button" id="setupToggle" class="ghost" aria-expanded="true" aria-controls="setupBody">Done ✓</button></div></div>
+ <div class="sectionhead"><h2><span class="idx">A</span>Your setup</h2><div class="head-actions"><span class="tag live">● LIVE</span><button type="button" id="setupToggle" class="ghost" aria-expanded="true" aria-controls="setupBody">Hide setup ▲</button></div></div>
  <button type="button" id="setupSummary" class="setup-summary" hidden></button>
  <div id="setupBody">
  <div class="dx"><label class="dx-drop" for="dxFile"><span class="dx-icon">⇪</span><span><b>Windows? Read your GPU from DxDiag</b><small>Press Win+R, run <code>dxdiag</code>, click “Save All Information…”, then choose that .txt here. Read only in your browser.</small></span><input id="dxFile" type="file" accept=".txt,text/plain"></label><p id="dxStatus" class="note" role="status"></p></div>
@@ -48,6 +48,12 @@
  </div>
  <details class="advanced"><summary>Advanced memory assumptions</summary><p class="note">Generic dense transformer profile, independent of parameter count. Update these from your model’s metadata for a better estimate.</p><div class="fields"><label>Layers<input id="layers" type="number" min="1" max="200" value="40"></label><label>KV heads<input id="heads" type="number" min="1" max="128" value="8"></label><label>Head dimension<input id="dim" type="number" min="16" max="1024" value="128"></label><label>KV precision<select id="cache"><option value="2">FP16 · 2 bytes</option><option value="1">8-bit · ~1 byte</option><option value="0.5">4-bit · ~½ byte</option></select></label><label>Runtime overhead (GiB)<input id="overhead" type="number" min="0" max="16" step="0.1" value="0.8"></label></div><p class="note">Cache quantization is separate from weight quantization. It may affect accuracy and latency; support and metadata overhead vary.</p></details>
 </div>
+</section>
+
+<section id="recs" class="panel recs" hidden>
+ <div class="sectionhead"><h2><span class="idx">★</span>Recommended for your GPU</h2><button type="button" id="recsDismiss" class="ghost">Dismiss ✕</button></div>
+ <p id="recsStatus" class="note" role="status"></p>
+ <div id="recsList"></div>
 </section>
 
 <section class="panel discover">
@@ -97,4 +103,4 @@
 <a href="#forecast" class="mini" aria-label="Jump to memory forecast"><span class="mini-label">FORECAST</span><span id="miniTotal"></span><span id="miniBand" class="pill ok"></span></a>
 
 <footer>LOCAL_AI/WORKBENCH <span>Estimates to explore, measurements to confirm.</span></footer>
-<script src="engine.js"></script><script src="catalog.js"></script><script src="hf.js"></script><script src="app.js"></script><script src="dxdiag.js"></script></body></html>
+<script src="engine.js"></script><script src="catalog.js"></script><script src="hf.js"></script><script src="app.js"></script><script src="dxdiag.js"></script><script src="recs.js"></script></body></html>
