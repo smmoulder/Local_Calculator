@@ -173,3 +173,22 @@ footer{max-width:1440px;margin:0 auto;padding:24px 28px 40px;border-top:1px soli
  .hf-file{flex-direction:column}.hf-side{flex-direction:row;align-items:center;justify-content:space-between}
  .total>span{font-size:48px}
 }
+
+/* setup: collapse + dxdiag */
+.head-actions{display:flex;align-items:center;gap:12px}
+.setup-summary{width:100%;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--bg2);border:1px solid var(--line2);border-radius:8px;padding:12px 14px;cursor:pointer;color:var(--text);text-align:left;font:13px var(--mono)}
+.setup-summary:hover{border-color:var(--accent)}
+.sum-item{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:3px 9px;color:var(--dim)}
+.sum-item b{color:var(--accent);font-weight:600}.sum-item.dim{color:var(--faint)}
+.sum-edit{margin-left:auto;color:var(--accent);font-size:12px}
+.panel.controls:has(#setupBody[hidden]) .sectionhead{margin-bottom:12px}
+.dx{margin-bottom:22px}
+.dx-drop{display:flex;gap:14px;align-items:center;padding:14px 16px;border:1px dashed var(--line2);border-radius:8px;background:var(--bg2);cursor:pointer;transition:border-color .15s}
+.dx-drop:hover{border-color:var(--accent)}
+.dx-drop input{position:absolute;width:1px;height:1px;opacity:0}
+.dx-drop b{display:block;font-size:13.5px}.dx-drop small{margin-top:2px}
+.dx-drop code{font:12px var(--mono);color:var(--accent)}
+.dx-icon{font-size:20px;color:var(--accent);width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--accent-dim);border-radius:8px;flex:none}
+#dxStatus:empty{display:none}
+.result .sectionhead h2{display:flex;gap:10px;align-items:center}
+[hidden]{display:none!important}
