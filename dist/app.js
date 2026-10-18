@@ -11,10 +11,10 @@ const quantNotes={
  FILE:'This GGUF uses a format outside the named presets. Weight memory comes from the selected file size; the format alone does not establish quality or speed.',
  FP16:'FP16: 16-bit floating-point weights. This is the highest weight precision offered here and uses about twice the weight memory of Q8_0. It does not increase context capacity or guarantee better reasoning.'
 };
-const fmt=n=>n.toFixed(1),colors=['#285d4a','#84a47c','#d4b77a','#d3dccd'];
+const fmt=n=>n.toFixed(1),colors=['var(--c-weights)','var(--c-kv)','var(--c-runtime)','var(--c-free)'];
 function render(){const s=state();if(ids.some(id=>id!=='quant'&&(!$(id).checkValidity()||$(id).value===''))){$('verdict').textContent='Enter valid values in the advanced assumptions to update the estimate.';return}const r=estimate(s);$('quantExplanation').textContent=quantNotes[s.quant];
  $('vramO').textContent=s.vram+' GiB';$('vramSelected').textContent=s.vram+' GiB selected';$('paramsO').textContent=s.params+'B';$('offloadO').textContent=s.offload+'%';$('headroomO').textContent=s.headroom+' GiB';
- $('total').textContent=fmt(r.total);$('required').textContent=fmt(r.required)+' GiB including desired reserve';$('badge').textContent=r.band;$('badge').className=r.band==='Tight'?'tight':r.band==='Spill likely'?'spill':'';
+ $('total').textContent=fmt(r.total);$('required').textContent=fmt(r.required)+' GiB including desired reserve';$('badge').textContent=r.band;const bc=r.band==='Tight'?'tight':r.band==='Spill likely'?'spill':'ok';$('badge').className='pill '+bc;$('forecast').className='panel result band-'+bc;$('miniTotal').textContent=fmt(r.total)+' / '+s.vram+' GiB';$('miniBand').textContent=r.band;$('miniBand').className='pill '+bc;
  const parts=[r.gpuWeights,r.gpuKV,s.overhead,Math.max(0,r.free)],labels=['Model weights','KV cache','Runtime / buffers','Free memory'];const scale=Math.max(s.vram,r.total);
  $('bar').innerHTML=parts.map((v,i)=>`<div title="${labels[i]}: ${fmt(v)} GiB" style="width:${v/scale*100}%;background:${colors[i]}"></div>`).join('');
  $('legend').innerHTML=parts.map((v,i)=>`<span><i style="background:${colors[i]}"></i>${labels[i]} <b>${fmt(v)} GiB</b></span>`).join('');
