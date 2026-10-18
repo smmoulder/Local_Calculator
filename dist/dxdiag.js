@@ -41,8 +41,8 @@ if(typeof document!=='undefined'&&document.getElementById('dxFile')){
  };
  // Collapsible setup
  const qLabel=()=>g('quant').value==='FILE'?'file size':g('quant').value;
- function summary(){return `<span class="sum-item"><b>${g('vram').value} GiB</b> GPU</span><span class="sum-item"><b>${(g('context').value/1024)}K</b> context</span><span class="sum-item"><b>${g('offload').value}%</b> offload</span><span class="sum-item"><b>${g('headroom').value} GiB</b> reserve</span><span class="sum-item dim">${g('params').value}B · ${qLabel()}</span><span class="sum-edit">Edit ✎</span>`}
- function setCollapsed(c){g('setupBody').hidden=c;g('setupSummary').hidden=!c;g('setupToggle').textContent=c?'Edit ✎':'Done ✓';g('setupToggle').setAttribute('aria-expanded',String(!c));if(c)g('setupSummary').innerHTML=summary();try{localStorage.setItem('local-ai-setup-collapsed',c?'1':'')}catch{}}
+  function summary(){return `<span class="sum-item"><b>${g('vram').value} GiB</b> GPU</span><span class="sum-edit">Edit setup ✎</span>`}
+  function setCollapsed(c){g('setupBody').hidden=c;g('setupSummary').hidden=!c;g('setupToggle').textContent=c?'Show setup ▼':'Hide setup ▲';g('setupToggle').setAttribute('aria-expanded',String(!c));if(c)g('setupSummary').innerHTML=summary();try{localStorage.setItem('local-ai-setup-collapsed',c?'1':'')}catch{}}
  g('setupToggle').onclick=()=>setCollapsed(!g('setupBody').hidden);
  g('setupSummary').onclick=()=>setCollapsed(false);
  const refresh=()=>{if(g('setupBody').hidden)g('setupSummary').innerHTML=summary()};
