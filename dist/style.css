@@ -199,3 +199,5 @@ footer{max-width:1440px;margin:0 auto;padding:24px 28px 40px;border-top:1px soli
 .recs{border-color:var(--accent-dim)}
 .recs .idx{border-radius:999px}
 .rec-card{background:var(--bg2)}
+.hf-unload{margin-left:.5rem;padding:.15rem .6rem;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--dim);font:inherit;font-size:.8rem;cursor:pointer}
+.hf-unload:hover{color:var(--accent);border-color:var(--accent-dim)}
