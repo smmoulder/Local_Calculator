@@ -1,6 +1,6 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const html=fs.readFileSync('dist/index.html','utf8'),elements={};
-for(const m of html.matchAll(/<[^>]*\bid="([^"]+)"[^>]*>/g))elements[m[1]]={value:m[0].match(/value="([^"]*)"/)?.[1]||'',checkValidity:()=>true,scrollIntoView(){},focus(){},addEventListener(){}};
+for(const m of html.matchAll(/<[^>]*\bid="([^"]+)"[^>]*>/g))elements[m[1]]={value:m[0].match(/value="([^"]*)"/)?.[1]||'',checkValidity:()=>true,closest:()=>null,scrollIntoView(){},focus(){},addEventListener(){}};
 for(const [id,value] of Object.entries({quant:'Q4_K_M',context:'8192',cache:'2',hfSort:'fit'}))elements[id].value=value;
 const context={document:{getElementById:id=>elements[id],querySelectorAll:()=>[]},localStorage:{getItem:()=>null,setItem(){}},AbortSignal:{timeout:()=>null},console,
  fetch:async url=>({ok:true,headers:{get:()=>null},json:async()=>url.includes('/config.json')?{model_type:'llama',num_hidden_layers:32,num_key_value_heads:8,num_attention_heads:32,hidden_size:4096,max_position_embeddings:8192}:url.includes('?blobs')?{gguf:{total:8e9},siblings:[{rfilename:'model-Q4_K_M.gguf',size:5e9},{rfilename:'model-Q8_0.gguf',size:9e9}]}:[{id:'example/model'}]})};

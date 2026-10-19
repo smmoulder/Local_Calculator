@@ -36,9 +36,9 @@ if(typeof document!=='undefined'&&document.getElementById('dxFile')){
    if(new Uint8Array(bytes).slice(0,6).every((v,i)=>v===[98,112,108,105,115,116][i])&&bytes.byteLength>=6)throw Error('Binary plist reports are not supported yet. Please export an XML system report.');
    const isMac=/\.spx$/i.test(f.name)||/<plist[\s>]/i.test(text);
    const r=isMac?spxParse(text):dxParse(text);
-   if(r?.unified){g('dxStatus').textContent='Apple silicon unified memory detected. It is shared system memory, not dedicated VRAM. Your GPU setting has not changed; unified-memory support will be added separately.';return}
+   if(r?.unified){if(!Number.isFinite(r.totalGiB)||r.totalGiB<4||r.totalGiB>2048){g('dxStatus').textContent='Apple silicon detected, but total memory could not be read within the supported 4–2048 GiB range. Choose unified-memory mode and enter capacity manually. Settings unchanged.';return}g('memoryType').value='unified';g('unifiedTotal').value=r.totalGiB;g('modelBudget').value=unifiedStartBudget(r.totalGiB);g('hardwareIdentity').textContent='Imported hardware: '+r.name;normalizeUnifiedBudget();render();if(typeof scheduleRecs==='function')scheduleRecs();g('dxStatus').textContent=`Found ${r.name} · ${r.totalGiB} GiB unified memory. Starting model budget: ${g('modelBudget').value} GiB (our conservative heuristic, not an Apple limit).`;if(g('setupBody').hidden)g('setupSummary').innerHTML=summary();return}
    if(!r){g('dxStatus').textContent='No dedicated GPU memory found. Use a DxDiag “Save All Information” .txt or System Information .spx report. Your GPU setting has not changed.';return}
-   const slider=dxSliderValue(r.gib);g('vram').value=slider;render();
+   g('memoryType').value='dedicated';g('hardwareIdentity').textContent='';const slider=dxSliderValue(r.gib);g('vram').value=slider;render();if(typeof scheduleRecs==='function')scheduleRecs();
    const others=r.cards.length>1?` ${r.cards.length} GPUs with reported dedicated memory found; using the one with the most memory.`:'';
    const rounded=Math.abs(slider-r.gib)>.01?` Rounded/clamped to the slider’s 2 GiB steps and 2–128 GiB range; reported memory is ${r.gib.toFixed(2)} GiB.`:'';
    g('dxStatus').textContent=`Found ${r.name} · ${r.gib.toFixed(1)} GiB dedicated. GPU memory set to ${slider} GiB.${others}${rounded}`;
@@ -50,7 +50,7 @@ if(typeof document!=='undefined'&&document.getElementById('dxFile')){
  if(drop){drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('dragging')});drop.addEventListener('dragleave',()=>drop.classList.remove('dragging'));drop.addEventListener('drop',async e=>{e.preventDefault();drop.classList.remove('dragging');if(e.dataTransfer.files.length!==1){g('dxStatus').textContent='Drop one hardware report at a time.';return}await importReport(e.dataTransfer.files[0])});}
  // Collapsible setup
  const qLabel=()=>g('quant').value==='FILE'?'file size':g('quant').value;
-  function summary(){return `<span class="sum-item"><b>${g('vram').value} GiB</b> GPU</span><span class="sum-edit">Edit setup ✎</span>`}
+  function summary(){if(g('memoryType').value==='unified')return `<span class="sum-item"><b>${g('unifiedTotal').value} GiB</b> unified · <b>${g('modelBudget').value} GiB</b> model budget</span><span class="sum-edit">Edit setup ✎</span>`;return `<span class="sum-item"><b>${g('vram').value} GiB</b> GPU</span><span class="sum-edit">Edit setup ✎</span>`}
   function setCollapsed(c){g('setupBody').hidden=c;g('setupSummary').hidden=!c;g('setupToggle').textContent=c?'Show setup ▼':'Hide setup ▲';g('setupToggle').setAttribute('aria-expanded',String(!c));if(c)g('setupSummary').innerHTML=summary();try{localStorage.setItem('local-ai-setup-collapsed',c?'1':'')}catch{}}
  g('setupToggle').onclick=()=>setCollapsed(!g('setupBody').hidden);
  g('setupSummary').onclick=()=>setCollapsed(false);

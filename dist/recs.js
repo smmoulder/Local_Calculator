@@ -27,14 +27,14 @@ async function updateRecs(){
   const picks=[],usedRepos=new Set();
   for(const x of ranked){if(picks.length>=3)break;if(usedRepos.has(x.m.repo))continue;usedRepos.add(x.m.repo);picks.push(x)}
   if(!picks.length){document.getElementById('recsStatus').textContent='No comfortable fits found among popular repositories at these settings. Try lowering context or reserve.';return}
-  document.getElementById('recsStatus').textContent=`Three comfortable fits for ${s.vram} GiB at ${(s.context/1024).toFixed(0)}K context, sampled from popular repositories. Estimates, not quality rankings.`;
+  document.getElementById('recsStatus').textContent=`Comfortable fits for ${s.vram} GiB ${s.memoryType==='unified'?'model budget':'VRAM'} at ${(s.context/1024).toFixed(0)}K context, sampled from popular repositories. Estimates, not quality rankings.`;
   document.getElementById('recsList').innerHTML=picks.map((x,i)=>{const pct=Math.min(100,x.r.total/s.vram*100);return `<article class="hf-file rec-card"><div class="hf-main"><div class="hf-title"><strong>${esc(x.m.repo)}</strong><span class="pill ok">Comfortable</span></div><p class="forecast-filename">${esc(x.m.name)}</p><div class="hf-meta"><span>${x.m.params===null?'? params':x.m.params+'B'}</span><span>${esc(x.m.quantLabel||x.m.quant)}</span><span>${(x.m.bytes/2**30).toFixed(2)} GiB file</span></div><div class="hf-meter" title="${x.r.total.toFixed(1)} of ${s.vram} GiB"><i style="width:${pct}%"></i></div></div><div class="hf-side"><span class="hf-vram">${x.r.total.toFixed(1)}<small> GiB</small></span><span class="hf-free">${x.r.free.toFixed(1)} free</span><button data-rec="${i}">Load →</button></div></article>`}).join('');
   document.getElementById('recsList').onclick=e=>{const b=e.target.closest('[data-rec]');if(!b)return;const m=picks[Number(b.dataset.rec)].m;hfOptions.push(m);hfLoad(hfOptions.length-1)};
  }catch(e){if(generation===recGeneration)document.getElementById('recsStatus').textContent=`Recommendations unavailable: ${e.message} The search below still works.`}
 }
 function scheduleRecs(){clearTimeout(recTimer);recTimer=setTimeout(updateRecs,600)}
 if(typeof document!=='undefined'&&document.getElementById('recs')){
- document.getElementById('vram').addEventListener('change',scheduleRecs);
+ ['vram','memoryType','unifiedTotal','modelBudget'].forEach(id=>document.getElementById(id).addEventListener('change',scheduleRecs));
  document.getElementById('dxFile').addEventListener('change',()=>setTimeout(scheduleRecs,100));
  document.getElementById('recsDismiss').onclick=()=>{recGeneration++;document.getElementById('recs').hidden=true};
 }

@@ -49,3 +49,11 @@ Fit bands always describe estimated memory: Comfortable, Tight, Spill likely. Co
 Drop or choose a Windows DxDiag `.txt` or macOS System Information XML `.spx` report. Parsing runs in the browser; report content is not uploaded or stored. Dedicated GPU memory is read from graphics fields, not system RAM or shared-memory fields. With multiple reported dedicated GPUs, the largest is selected and stated in the status. Current slider rounding/clamping (2 GiB steps, 2�128 GiB) is disclosed when it affects the result. Apple silicon reports are recognized and leave settings unchanged until a unified-memory budget is implemented. Binary property-list exports are not supported in this version; XML exports are required.
 
 Run `node test-spx.cjs` and `node test-dxdiag.cjs` for import parsing checks. No personal system report fixtures are included in the repository.
+
+## Apple silicon unified-memory planning
+
+Choose Apple silicon in Hardware memory type and enter total unified memory manually, or import an XML SPX containing Apple M-series identification and physical_memory. No actual Apple silicon report was available during implementation; parser and import were tested with synthetic fixtures. The supplied Intel Mac Pro report remains verified separately.
+
+The starting model budget is one quarter of total memory, e.g. 8 GiB on a 32 GiB Mac. This is a conservative product heuristic, not an Apple GPU limit. The allowance includes all weights, cache, and runtime overhead. Total minus allowance is already reserved for system/apps/safety, so dedicated-VRAM headroom is not added a second time. CPU offload cannot reduce the unified physical pool requirement. Tight is the final 10% of the selected allowance; Over budget is not proof of physical memory exhaustion. Runtime working-set limits and current available memory are not measured. Dedicated GPU mode retains its separate capacity, offload, and reserve behavior.
+
+Run `node test-unified.cjs` for unified accounting, boundary labels, mode switching, and synthetic report import checks.
