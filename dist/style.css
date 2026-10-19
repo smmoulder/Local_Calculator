@@ -205,7 +205,7 @@ footer{max-width:1440px;margin:0 auto;padding:24px 28px 40px;border-top:1px soli
 /* Theme choice: layout is shared; semantic colors change with the palette. */
 :root{color-scheme:dark}
 :root[data-theme="light"]{
- color-scheme:light;--bg:#f3f6f5;--bg2:#ffffff;--panel:#ffffff;--panel2:#f8fbfa;
+ color-scheme:light;--bg:#a8bace;--bg2:#ffffff;--panel:#ffffff;--panel2:#fafcfe;
  --line:#dce5e1;--line2:#bdcdc6;--text:#1c3029;--dim:#4d6359;--faint:#61756b;
  --accent:#087952;--accent-dim:#b1d8c5;--cyan:#096c9b;--amber:#946000;--red:#b62b35;
  --c-weights:#14885e;--c-kv:#2588b9;--c-runtime:#c48a26;--c-free:#dbe5df;
@@ -215,7 +215,8 @@ footer{max-width:1440px;margin:0 auto;padding:24px 28px 40px;border-top:1px soli
 .theme-toggle button{border:0;background:transparent;color:var(--dim);padding:3px 9px;border-radius:999px;font:11px var(--mono);cursor:pointer}
 .theme-toggle button[aria-pressed="true"]{background:var(--accent);color:var(--bg)}
 .theme-toggle button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-html[data-theme="light"] .topbar{background:rgba(243,246,245,.94)}
+html[data-theme="light"] .topbar{background:rgba(168,186,206,.94)}
+html[data-theme="light"] body{background-image:linear-gradient(rgba(43,74,106,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(43,74,106,.09) 1px,transparent 1px),radial-gradient(ellipse 80% 50% at 70% -10%,rgba(75,129,184,.12),transparent 60%)}
 html[data-theme="light"] .mini{background:rgba(255,255,255,.97);box-shadow:0 8px 28px -14px rgba(20,50,35,.25)}
 html[data-theme="light"] .hero h1 em,html[data-theme="light"] .brand .logo,html[data-theme="light"] .result .total>span{text-shadow:none}
 html[data-theme="light"] input[type=range]::-webkit-slider-thumb{box-shadow:0 0 0 3px rgba(8,121,82,.1)}
