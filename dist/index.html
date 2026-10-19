@@ -52,14 +52,14 @@
 </div>
 </section>
 
-<section id="recs" class="panel recs" hidden>
- <div class="sectionhead"><h2><span class="idx">★</span>Recommended for your GPU</h2><button type="button" id="recsDismiss" class="ghost">Dismiss ✕</button></div>
- <p id="recsStatus" class="note" role="status"></p>
- <div id="recsList"></div>
-</section>
-
 <section class="panel discover">
  <div class="sectionhead"><h2><span class="idx">B</span>Discover models</h2><span class="tag">HUGGING FACE · GGUF</span></div>
+ <section id="recs" class="starting-points" aria-labelledby="recsHeading">
+  <div class="sectionhead"><h3 id="recsHeading">Suggested starting points</h3><button type="button" id="recsRetry" class="ghost">Refresh suggestions</button></div>
+  <p class="note">A small shortlist for general chat and coding, matched to your current memory budget and context. These are starting points to test, not a quality ranking or the newest-model leaderboard. File metadata is read directly from Hugging Face; no weights are downloaded.</p>
+  <p id="recsStatus" class="note" role="status">Reading model file sizes…</p><div id="recsList"></div>
+ </section>
+ <h3 class="search-heading">Explore Hugging Face</h3>
  <form id="hfForm" class="filters">
   <label>Family<select id="hfFamily"><option value="">All families</option><option>llama</option><option>qwen</option><option>gemma</option><option>mistral</option><option>phi</option><option>deepseek</option><option>granite</option><option>olmo</option><option>smollm</option><option>command</option></select></label>
   <label>Publisher<select id="hfAuthor"><option value="">Any publisher</option><option>bartowski</option><option>unsloth</option><option>lmstudio-community</option><option>ggml-org</option><option>QuantFactory</option><option>mradermacher</option><option>TheBloke</option><option>Qwen</option><option>google</option><option>MaziyarPanahi</option></select></label>

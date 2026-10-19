@@ -232,3 +232,10 @@ html{scroll-padding-top:110px}
 /* Softer everyday controls; retain monospace for filenames and measurements. */
 .filters label,.fields label{font-family:var(--sans);font-size:12px;letter-spacing:.02em;text-transform:none}
 .setup-summary,.theme-toggle button,.hf-side button,[data-p],.exp-btns button{font-family:var(--sans)}
+
+.starting-points{margin:18px 0 24px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.starting-points h3,.search-heading{font-size:16px}
+.starting-points .sectionhead{flex-wrap:wrap;gap:10px}
+.starting-points .hf-file{margin-top:12px}
+.starting-points .rec-purpose{font-size:13px;color:var(--dim);margin:6px 0}
+.search-heading{margin-bottom:14px}

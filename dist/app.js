@@ -26,6 +26,7 @@ function render(){const s=state();if(ids.some(id=>!['quant','memoryType'].includ
  $('speed').textContent=`${s.offload<100?'Some computation moves to the CPU, often reducing speed.':'Full GPU offload avoids CPU layer work if the allocation fits.'} Longer active prompts take more processing and attention work and can slow responses. Raising the limit from 8K to 16K does not necessarily slow a short exchange: actual token use, cache allocation, and GPU placement matter. A runtime that reserves more memory may offload work to the CPU or spill, causing a sharp slowdown even on a short prompt. Quantization can help speed through lower memory traffic, but kernels and hardware matter. No tokens/sec prediction is implied.`;
  if(r.unified)$('speed').textContent='Apple silicon CPU and GPU share physical memory. Moving layers to the CPU does not free a separate VRAM pool; this estimate counts all model weights and cache once. Metal/MLX GPU acceleration, chip bandwidth, active context, runtime, and memory pressure affect speed. A fit estimate does not predict tokens per second.';
  if(typeof renderHF==='function')renderHF(s);
+ if(typeof scheduleRecs==='function')scheduleRecs();
  $('recommendations').hidden=mode!=='gpu';if(mode==='gpu')renderRanges(s);
  try{localStorage.setItem('local-ai-setup',JSON.stringify({s,mode,hfSelection:HF_SELECTION}))}catch{}
 }
