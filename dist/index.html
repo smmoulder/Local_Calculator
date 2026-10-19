@@ -16,7 +16,7 @@
  <div class="sectionhead"><h2><span class="idx">A</span>Your setup</h2><div class="head-actions"><span class="tag live">● LIVE</span><button type="button" id="setupToggle" class="ghost" aria-expanded="true" aria-controls="setupBody">Hide setup ▲</button></div></div>
  <button type="button" id="setupSummary" class="setup-summary" hidden></button>
  <div id="setupBody">
- <div class="dx"><label class="dx-drop" for="dxFile"><span class="dx-icon">⇪</span><span><b>Windows? Read your GPU from DxDiag</b><small>Press Win+R, run <code>dxdiag</code>, click “Save All Information…”, then choose that .txt here. Read only in your browser.</small></span><input id="dxFile" type="file" accept=".txt,text/plain"></label><p id="dxStatus" class="note" role="status"></p></div>
+ <div class="dx"><label id="hardwareDrop" class="dx-drop" for="dxFile"><span class="dx-icon">⇪</span><span><b>Read your GPU from a Windows or Mac report</b><small>Drop DxDiag.txt or a Mac System Report.spx here, or click to choose a file. Read only in your browser.</small></span><input id="dxFile" type="file" accept=".txt,.spx,text/plain,application/xml,text/xml"></label><details><summary>How to save your hardware report</summary><p>Windows: press Win+R, run <code>dxdiag</code>, then choose “Save All Information…”.</p><p>Mac: open System Information (hold Option while opening the Apple menu), then choose File → Save to create a .spx report. You do not need to select Graphics/Displays first.</p><p>Mac import currently supports dedicated GPU memory. Apple silicon unified-memory budgeting will be handled separately.</p></details><p id="dxStatus" class="note" role="status"></p></div>
  <div class="ctl-grid">
  <div class="ctl wide">
   <label>GPU memory <output id="vramO"></output><input id="vram" type="range" min="2" max="128" step="2" value="12" aria-describedby="vramScale vramHelp"></label>
@@ -103,4 +103,4 @@
 <a href="#forecast" class="mini" aria-label="Jump to memory forecast"><span class="mini-label">FORECAST</span><span id="miniTotal"></span><span id="miniBand" class="pill ok"></span></a>
 
 <footer>LOCAL_AI/WORKBENCH <span>Estimates to explore, measurements to confirm.</span></footer>
-<script src="engine.js"></script><script src="catalog.js"></script><script src="hf.js"></script><script src="app.js"></script><script src="dxdiag.js"></script><script src="recs.js"></script></body></html>
+<script src="engine.js"></script><script src="catalog.js"></script><script src="hf.js"></script><script src="app.js"></script><script src="spx.js"></script><script src="dxdiag.js"></script><script src="recs.js"></script></body></html>

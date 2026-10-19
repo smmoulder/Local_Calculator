@@ -27,18 +27,27 @@ function dxSliderValue(gib){return Math.max(2,Math.min(128,Math.round(gib/2)*2))
 
 if(typeof document!=='undefined'&&document.getElementById('dxFile')){
  const g=id=>document.getElementById(id);
- g('dxFile').onchange=async e=>{
-  const f=e.target.files&&e.target.files[0];if(!f)return;
+ async function importReport(f){
+  if(!f)return;
+  if(!/\.(txt|spx)$/i.test(f.name)){g('dxStatus').textContent='Choose a Windows .txt report or Mac .spx system report.';return}
+  if(f.size>25*1024*1024){g('dxStatus').textContent='That report exceeds the 25 MB limit. Save a smaller system report.';return}
   try{
-   const r=dxParse(dxDecode(await f.arrayBuffer()));
-   if(!r){g('dxStatus').textContent='No graphics card memory found in that file. Make sure it is the DxDiag “Save All Information” text file.';return}
-   g('vram').value=r.slider;render();
-   const others=r.cards.length>1?` ${r.cards.length} display devices found; using the one with the most dedicated memory.`:'';
-   const low=r.gib<1?' This looks like integrated graphics, which shares system memory; the estimate may not apply.':'';
-   g('dxStatus').textContent=`Found ${r.name} · ${r.dedicatedMB.toLocaleString()} MB dedicated (${r.gib.toFixed(1)} GiB). GPU memory set to ${r.slider} GiB.${others}${low}`;
-  }catch(err){g('dxStatus').textContent='Could not read that file: '+err.message}
-  e.target.value='';
- };
+   const bytes=await f.arrayBuffer();const text=dxDecode(bytes);
+   if(new Uint8Array(bytes).slice(0,6).every((v,i)=>v===[98,112,108,105,115,116][i])&&bytes.byteLength>=6)throw Error('Binary plist reports are not supported yet. Please export an XML system report.');
+   const isMac=/\.spx$/i.test(f.name)||/<plist[\s>]/i.test(text);
+   const r=isMac?spxParse(text):dxParse(text);
+   if(r?.unified){g('dxStatus').textContent='Apple silicon unified memory detected. It is shared system memory, not dedicated VRAM. Your GPU setting has not changed; unified-memory support will be added separately.';return}
+   if(!r){g('dxStatus').textContent='No dedicated GPU memory found. Use a DxDiag “Save All Information” .txt or System Information .spx report. Your GPU setting has not changed.';return}
+   const slider=dxSliderValue(r.gib);g('vram').value=slider;render();
+   const others=r.cards.length>1?` ${r.cards.length} GPUs with reported dedicated memory found; using the one with the most memory.`:'';
+   const rounded=Math.abs(slider-r.gib)>.01?` Rounded/clamped to the slider’s 2 GiB steps and 2–128 GiB range; reported memory is ${r.gib.toFixed(2)} GiB.`:'';
+   g('dxStatus').textContent=`Found ${r.name} · ${r.gib.toFixed(1)} GiB dedicated. GPU memory set to ${slider} GiB.${others}${rounded}`;
+   if(g('setupBody').hidden)g('setupSummary').innerHTML=summary();
+  }catch(err){g('dxStatus').textContent='Could not read that report: '+err.message+' GPU setting unchanged.'}
+ }
+ g('dxFile').onchange=async e=>{await importReport(e.target.files?.[0]);e.target.value=''};
+ const drop=g('hardwareDrop');
+ if(drop){drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('dragging')});drop.addEventListener('dragleave',()=>drop.classList.remove('dragging'));drop.addEventListener('drop',async e=>{e.preventDefault();drop.classList.remove('dragging');if(e.dataTransfer.files.length!==1){g('dxStatus').textContent='Drop one hardware report at a time.';return}await importReport(e.dataTransfer.files[0])});}
  // Collapsible setup
  const qLabel=()=>g('quant').value==='FILE'?'file size':g('quant').value;
   function summary(){return `<span class="sum-item"><b>${g('vram').value} GiB</b> GPU</span><span class="sum-edit">Edit setup ✎</span>`}

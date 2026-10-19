@@ -1,0 +1,12 @@
+const assert=require('node:assert/strict');
+const {spxParse}=require('./dist/spx.js');
+const wrap=content=>`<?xml version="1.0"?><!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><array>${content}</array></plist>`;
+const section=(type,items)=>`<dict><key>_dataType</key><string>${type}</string><key>_items</key><array>${items}</array></dict>`;
+const gpu=(name,memory,key='spdisplays_vram')=>`<dict><key>sppci_model</key><string>${name}</string><key>${key}</key><string>${memory}</string></dict>`;
+const xml=wrap(section('SPDisplaysDataType',gpu('Discrete &amp; GPU','8 GB')+gpu('Other','4096 MB'))+section('SPHardwareDataType','<dict><key>physical_memory</key><string>64 GB</string></dict>'));
+assert.equal(spxParse(xml).gib,8);assert.equal(spxParse(xml).name,'Discrete & GPU');assert.equal(spxParse(xml).cards.length,2);
+assert.equal(spxParse(wrap(section('SPDisplaysDataType',gpu('Intel','1536 MB','spdisplays_vram_shared')))),null);
+assert.equal(spxParse(wrap(section('SPDisplaysDataType',gpu('Apple M4','32 GB')))).unified,true);
+assert.equal(spxParse(wrap(section('SPHardwareDataType','<dict><key>chip_type</key><string>Apple M4 Pro</string></dict>'))).unified,true);
+assert.throws(()=>spxParse(xml.slice(0,-20)));assert.throws(()=>spxParse('<!DOCTYPE plist [<!ENTITY x "bad">]><plist/>'));
+console.log('Mac plist, dedicated/shared distinction, multiple GPUs, Apple silicon, and malformed-report checks passed');

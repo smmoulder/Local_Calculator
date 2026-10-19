@@ -43,3 +43,9 @@ Run `node test-discovery.cjs` for discovery interaction checks with a simulated 
 ## Memory fit versus confidence
 
 Fit bands always describe estimated memory: Comfortable, Tight, Spill likely. Confidence is separate: Moderate for supported full-attention architectures with dimensions and context metadata; Low for unknown/hybrid/windowed architectures, missing fields, or context above the reported limit. Low-confidence Comfortable estimates are labeled Likely comfortable. Moderate does not mean measured or guaranteed. Supported profiles include Llama, Qwen2, dense Qwen3, Qwen3 MoE, and non-windowed Mistral/Phi3 configurations. MoE uses full published file sizes for weights, never active parameter count. Expert runtime buffers remain approximate. Hybrid models remain low confidence. Search requests text-generation GGUF repositories and excludes repositories explicitly marked as unrelated tasks when inspecting them.
+
+## Hardware report import
+
+Drop or choose a Windows DxDiag `.txt` or macOS System Information XML `.spx` report. Parsing runs in the browser; report content is not uploaded or stored. Dedicated GPU memory is read from graphics fields, not system RAM or shared-memory fields. With multiple reported dedicated GPUs, the largest is selected and stated in the status. Current slider rounding/clamping (2 GiB steps, 2�128 GiB) is disclosed when it affects the result. Apple silicon reports are recognized and leave settings unchanged until a unified-memory budget is implemented. Binary property-list exports are not supported in this version; XML exports are required.
+
+Run `node test-spx.cjs` and `node test-dxdiag.cjs` for import parsing checks. No personal system report fixtures are included in the repository.
