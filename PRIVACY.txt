@@ -1,0 +1,25 @@
+Local AI Workbench privacy notice — draft for publisher review
+
+Calculations and preferences are processed on your computer. Preferences
+are saved in the app's local storage. Hardware reports you choose are
+parsed locally; their contents are not uploaded or saved by the app.
+The app does not include analytics, advertising, or developer tracking.
+
+Using model discovery sends your search text, selected repository names,
+and metadata requests directly to Hugging Face over HTTPS. Hugging Face
+receives network information such as your IP address and applies its own
+privacy policy: https://huggingface.co/privacy. No login or access token
+is required. The app does not download model weights.
+
+External documentation and optional donation links open in your browser.
+Those services have their own privacy policies. The app never receives
+payment-card details. Local settings remain on the computer until cleared
+through the operating system or app storage. Uninstall may retain local
+application data depending on how the app was installed.
+
+Support and privacy inquiries:
+https://github.com/smmoulder/Local_Calculator/issues
+Do not post personal hardware reports or private data to public issues.
+
+Publisher: review this notice and publish it at a stable HTTPS URL before
+Store submission. Replace this draft footer with an effective date.

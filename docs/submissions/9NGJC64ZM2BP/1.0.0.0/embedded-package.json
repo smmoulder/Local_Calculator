@@ -1,0 +1,8 @@
+{
+  "name": "local-ai-workbench",
+  "version": "1.0.0",
+  "description": "Plan local AI model memory and explore GGUF models.",
+  "author": "smmoulder",
+  "private": true,
+  "main": "desktop/main.cjs"
+}

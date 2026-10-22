@@ -1,3 +1,7 @@
 site.tar.gz
 local-ai-workbench.zip
 node_modules/
+
+release/
+build/
+

@@ -1,0 +1,7 @@
+# Preserve the exact mixed line endings recovered from the submitted Windows runtime.
+dist/** -text
+desktop/main.cjs -text
+desktop/links.cjs -text
+docs/submissions/**/AppxManifest.xml -text
+*.png binary
+*.ico binary

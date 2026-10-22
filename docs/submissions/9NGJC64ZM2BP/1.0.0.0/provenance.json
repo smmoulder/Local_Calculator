@@ -1,0 +1,114 @@
+{
+  "storeId": "9NGJC64ZM2BP",
+  "submissionId": "1152921505702187975",
+  "storeStatusObserved": "In Microsoft Store",
+  "partnerCenterObservedDate": "2026-10-21",
+  "packageFile": "Local-Model-Calculator-1.0.0-x64.appx",
+  "packageSha256": "e10b8a6a42849dfcab915ab451903e634ef607ee37249579c46f48fb0452b811",
+  "packageBytes": 163899043,
+  "identity": {
+    "Name": "SMMOULDERPRODUCTIONS.LocalModelCalculator",
+    "ProcessorArchitecture": "x64",
+    "Publisher": "CN=FB6B7576-2633-4EE7-9626-01886E83B443",
+    "Version": "1.0.0.0"
+  },
+  "unsignedOriginalUpload": true,
+  "originalBuildCommit": null,
+  "originalBuildBaseCommit": "a1158f07caee613425b709f1fabc0e45d6089adb",
+  "originalBuildState": "Uncommitted Windows desktop changes on top of the base commit. No historical committed producer can be asserted.",
+  "recoveredSourceCommit": null,
+  "runtimeAsarSha256": "09a10e90d30be7f51926ac16637e717e2768cd44a1400846017e7b29de51057b",
+  "portalVerification": {
+    "url": "https://partner.microsoft.com/en-us/dashboard/products/9NGJC64ZM2BP/submissions/1152921505702187975/packages",
+    "filename": "Local-Model-Calculator-1.0.0-x64.appx",
+    "version": "1.0.0.0",
+    "architecture": "X64",
+    "displayedSize": "156.3 MB",
+    "minimumWindowsVersion": "10.0.19041.0",
+    "serverSideHashAvailable": false,
+    "scope": "Portal filename, version, architecture and rounded size agree. The portal did not expose an upload hash or downloadable original. Local output/build/Downloads copies have identical SHA-256."
+  },
+  "embeddedRuntimeFiles": [
+    {
+      "path": "build/icon.ico",
+      "sha256": "87b2ba7ad3f2affe8a0ef45cd7cad2a0c3c8340e81871010e7db3af17206be4d",
+      "size": 2261
+    },
+    {
+      "path": "desktop/links.cjs",
+      "sha256": "0f076c555f9ed99f137003e70be1f45f6f603ae8a1bb4b2cb720af54091c9c69",
+      "size": 423
+    },
+    {
+      "path": "desktop/main.cjs",
+      "sha256": "3a3b8e2be432e898714862bb22a08098c05d9f48effe72977100c6459d578e04",
+      "size": 2273
+    },
+    {
+      "path": "dist/app.js",
+      "sha256": "f28789ad361a67fe6c49644810efd63e8a7240079d8062b9711c3cf4d33a4fcc",
+      "size": 11634
+    },
+    {
+      "path": "dist/catalog.js",
+      "sha256": "e827834cbc9a54beac41322b58143ccede0b1434e974a24d3947293ecbc6f867",
+      "size": 907
+    },
+    {
+      "path": "dist/dxdiag.js",
+      "sha256": "2eba458ac31415537a0a97c03be1eb22e8e0a4bda8d296448e713c43366bd068",
+      "size": 6054
+    },
+    {
+      "path": "dist/engine.js",
+      "sha256": "96b50981952473fb10f1e93cc929fa22273d0f37ff41c8150b850b12346da110",
+      "size": 870
+    },
+    {
+      "path": "dist/hf.js",
+      "sha256": "f6d8c81153d59594eda7cb93681ba641862a73a3ec4857af5e1ea5131804e1c9",
+      "size": 14468
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "a99ff9ad98d63bbc742114afca39b36b5571e7681952f725c8507434b70c63de",
+      "size": 19869
+    },
+    {
+      "path": "dist/recs.js",
+      "sha256": "c1ba78f178ce6139ad49ed2fed11e957d924ef32564c26ee3f3bdb3cda1b774a",
+      "size": 6726
+    },
+    {
+      "path": "dist/spx.js",
+      "sha256": "8089335a922072f4023b7e32a944249b3cb09be4484d909ad3798d6ef1a00638",
+      "size": 3274
+    },
+    {
+      "path": "dist/style.css",
+      "sha256": "d1afc96320b915bd1f52e6255e55b3bbcbeee9a85dabc604ab243b2945f0d481",
+      "size": 19046
+    },
+    {
+      "path": "dist/support.js",
+      "sha256": "071ff1a1e65feece7a74877a46bb91e665dd1ab00328cdbcc796fb030211945c",
+      "size": 578
+    },
+    {
+      "path": "dist/theme.js",
+      "sha256": "1ea2b4104cf2fa654cf9accf2e504eb805555b8bee9ea9b5045f59a17cad99a1",
+      "size": 816
+    },
+    {
+      "path": "package.json",
+      "sha256": "d5d2cd86886e7f4ba87490bfb798aff4fa8897009c3dbeae5d7317adb6b3a872",
+      "size": 202
+    }
+  ],
+  "laterWorkPreserved": [
+    "Public PRIVACY.md from e572309a803e303eb03cf192294505bdcfb1da81",
+    "Post-package Store packaging configuration and build scripts",
+    "Mint calculator/chip Store listing artwork; packaged icons intentionally unchanged"
+  ],
+  "packageGenerationNote": "electron-builder removes development/build fields from embedded package.json. Its six runtime metadata fields match source package.json."
+}

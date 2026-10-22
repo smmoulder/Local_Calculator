@@ -1,0 +1,63 @@
+LOCAL MODEL CALCULATOR — STORE PREPARATION
+
+Build: install Node.js LTS, run npm ci, powershell -File build-assets.ps1,
+then npm test and npm run build:win. Extract the entire portable ZIP and
+launch Local AI Workbench.exe; the folder includes its runtime.
+
+Verified Partner Center identity, saved in desktop/store-identity.json:
+  Name: SMMOULDERPRODUCTIONS.LocalModelCalculator
+  Publisher: CN=FB6B7576-2633-4EE7-9626-01886E83B443
+  Publisher display name: SMMOULDER PRODUCTIONS
+  Store display name: Local Model Calculator
+  Store ID: 9NGJC64ZM2BP
+Run npm run build:store on Windows. Output:
+  release/Local-Model-Calculator-1.0.0-x64.appx
+STORE_IDENTITY_NAME, STORE_PUBLISHER and STORE_PUBLISHER_DISPLAY_NAME
+remain available as explicit overrides for future account changes.
+STORE_PREPACKAGED may point at a completed win-unpacked directory to skip
+repacking the desktop runtime. Otherwise the desktop app is built first.
+APPX is an accepted Microsoft Store package format. Store builds fail closed
+when identity values are missing. Microsoft signs accepted Store packages.
+
+Before submission:
+- Coffee button: confirmed from Telemetry's
+  codex/locate-starting-commit-before-edits branch, telemetry.py.
+  Destination: https://buymeacoffee.com/smmoulder. Tips are optional and
+  unlock no features. Review the final flow against current Store policy.
+- Product reservation and manifest identity are confirmed.
+- Run Windows App Certification Kit on the final package. Test installation,
+  launch, calculations offline, settings persistence, text/XML report import,
+  Hugging Face search online and offline error states, external links,
+  theme, zoom, keyboard navigation, and uninstall on a clean Windows machine.
+- Capture real screenshots of the final installed app for the Store listing.
+- Host PRIVACY.txt at a public HTTPS URL and enter it in Partner Center.
+- Complete age rating, markets, pricing, support URL, and capability review.
+- Review current Microsoft Store policies for the final donation flow.
+
+Suggested listing
+Name: Local Model Calculator
+Short description: Plan local AI model memory before you download.
+Description: Estimate GPU memory for local GGUF models. Explore weight
+precision, context length, KV cache, offloading, overhead and headroom.
+Search public Hugging Face GGUF repositories and compare estimated memory
+fit. Import Windows DxDiag text or Mac XML System Information reports
+locally. Includes dedicated VRAM and Apple silicon unified-memory planning,
+explanations, and light and dark themes. No models are downloaded or run.
+Results are planning estimates, not measured benchmarks or compatibility
+guarantees. Manual calculations work offline; discovery needs internet.
+Support: https://github.com/smmoulder/Local_Calculator/issues
+Category: Developer tools
+Release notes: First standalone Windows release.
+
+Certification notes: Full-trust desktop Electron app. No administrator
+privileges, drivers, background service, account, or model runtime needed.
+File import is user initiated and parsed locally. Network discovery calls
+the public Hugging Face API. Documentation and optional support links open
+in the default browser. No feature is gated behind payment.
+
+References:
+https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/upload-app-packages
+https://learn.microsoft.com/en-us/windows/apps/publish/store-policies
+
+Preparation is not certification or submission. The final identity-bound
+package and screenshots must be validated before upload.

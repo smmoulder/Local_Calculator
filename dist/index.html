@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Local AI Workbench · VRAM calculator</title><meta name="description" content="Estimate whether a local GGUF model fits your GPU, and understand every memory tradeoff."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><script src="theme.js"></script></head>
+<html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Local AI Workbench · VRAM calculator</title><meta name="description" content="Estimate whether a local GGUF model fits your GPU, and understand every memory tradeoff."><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src https://huggingface.co; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'"><link rel="stylesheet" href="style.css"><script src="theme.js"></script></head>
 <body>
 <header class="topbar">
  <div class="brand-stack"><a class="brand" href="#"><span class="logo">◈</span><span>LOCAL_AI<b>/WORKBENCH</b></span></a><div class="theme-toggle" role="group" aria-label="Color theme"><button type="button" data-theme-choice="light" aria-pressed="true">☀ Light</button><button type="button" data-theme-choice="dark" aria-pressed="false">☾ Dark</button></div></div>
  <nav class="modes" aria-label="Calculator mode"><button class="active" data-mode="gpu"><span>01</span>I own this GPU</button><button data-mode="model"><span>02</span>I found a model</button></nav>
- <button id="reset" class="ghost">Reset ↺</button>
+ <div class="head-actions"><a id="coffee" class="ghost" href="#" target="_blank" rel="noopener noreferrer" hidden>☕ Buy me a coffee</a><button id="reset" class="ghost">Reset ↺</button></div>
 </header>
 
 <div class="hero"><div class="eyebrow">// a little clarity before you download</div><h1>Find your model’s <em>comfort zone.</em></h1><p>Explore what fits your hardware — and understand what every tradeoff means.</p></div>
@@ -105,4 +105,4 @@
 <a href="#forecast" class="mini" aria-label="Jump to memory forecast"><span class="mini-label">FORECAST</span><span id="miniTotal"></span><span id="miniBand" class="pill ok"></span></a>
 
 <footer>LOCAL_AI/WORKBENCH <span>Estimates to explore, measurements to confirm.</span></footer>
-<script src="engine.js"></script><script src="catalog.js"></script><script src="hf.js"></script><script src="app.js"></script><script src="spx.js"></script><script src="dxdiag.js"></script><script src="recs.js"></script></body></html>
+<script src="support.js"></script><script src="engine.js"></script><script src="catalog.js"></script><script src="hf.js"></script><script src="app.js"></script><script src="spx.js"></script><script src="dxdiag.js"></script><script src="recs.js"></script></body></html>

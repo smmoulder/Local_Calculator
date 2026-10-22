@@ -1,0 +1,40 @@
+{
+  "name": "local-ai-workbench",
+  "version": "1.0.0",
+  "description": "Plan local AI model memory and explore GGUF models.",
+  "author": "smmoulder",
+  "private": true,
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node test.cjs && node test-dxdiag.cjs && node test-spx.cjs && node test-recs.cjs && node test-unified.cjs && node test-discovery.cjs && node --test desktop/test.cjs",
+    "build:win": "electron-builder --win zip --x64",
+    "build:store": "node desktop/build-store.cjs"
+  },
+  "build": {
+    "appId": "com.smmoulder.localaiworkbench",
+    "productName": "Local AI Workbench",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "build/icon.ico",
+      "desktop/main.cjs",
+      "desktop/links.cjs",
+      "package.json"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "build/icon.ico",
+      "signAndEditExecutable": false
+    },
+    "portable": {
+      "artifactName": "Local-AI-Workbench-${version}-${arch}.exe"
+    }
+  },
+  "devDependencies": {
+    "electron": "44.9.3",
+    "electron-builder": "26.15.3"
+  }
+}

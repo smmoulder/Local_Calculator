@@ -1,5 +1,33 @@
 # Local AI Workbench
 
+The Windows sources and original Store Submission 1 package are archived for
+**Local Model Calculator** (`9NGJC64ZM2BP`). See
+[Windows build and continuation instructions](docs/BUILD-WINDOWS.md) and the
+[verified submission record](docs/submissions/9NGJC64ZM2BP/1.0.0.0/README.md).
+The public [privacy policy](PRIVACY.md) is newer than the original desktop build.
+
+## Standalone Windows app
+
+The desktop build embeds the calculator in an isolated Electron window and
+includes its runtime. End users do not need Node.js or a web server. Extract
+the Windows ZIP completely and launch `Local AI Workbench.exe`.
+
+Developers: install Node.js LTS, run `npm ci`, then
+`powershell -File build-assets.ps1`, `npm test`, and `npm run build:win`.
+`npm start` launches the development app. `npm run build:store` creates an
+APPX package for the reserved **Local Model Calculator** product using the
+verified Partner Center identity in `desktop/store-identity.json`.
+See `STORE-SUBMISSION.txt` for packaging details and optional overrides.
+
+The optional Buy me a coffee button in the header uses the confirmed
+`https://buymeacoffee.com/smmoulder` destination and button label from
+Telemetry's `codex/locate-starting-commit-before-edits` branch. It opens in
+the default browser from the desktop app. Tips unlock no features.
+
+See `STORE-SUBMISSION.txt` and `PRIVACY.txt` for the submission preparation
+and draft privacy notice. Final desktop installation/certification testing,
+and listing screenshots are pending. Store identity is verified.
+
 A browser-based local-AI configuration calculator and tutor. Both modes estimate VRAM and explain the tradeoffs between weight precision, model capacity, context, KV cache, offload, overhead, and headroom.
 
 ## Run

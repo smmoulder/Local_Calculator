@@ -1,0 +1,1 @@
+These mint calculator/chip listing icons were created after the Windows package. They are listing artwork only; the submitted APPX retains its original AI-letter package icons. The full-resolution master and screenshots are preserved as GitHub Release assets. Do not regenerate or replace submission assets when verifying the historical package.
