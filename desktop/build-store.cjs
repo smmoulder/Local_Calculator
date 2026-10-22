@@ -13,6 +13,7 @@ if (process.env.STORE_IDENTITY_NAME === 'SMMOULDERPRODUCTIONS.TelemetryforChatGP
 build({targets: Platform.WINDOWS.createTarget(['appx'], Arch.x64),
   ...(process.env.STORE_PREPACKAGED ? {prepackaged: require('node:path').resolve(process.env.STORE_PREPACKAGED)} : {}),
   config: {
+  directories: {output: 'release/store-' + require('../package.json').version},
   appx: {
     identityName: process.env.STORE_IDENTITY_NAME,
     publisher: process.env.STORE_PUBLISHER,
