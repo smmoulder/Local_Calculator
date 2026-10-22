@@ -9,6 +9,8 @@
 - Exact length: `163899043` bytes
 - SHA-256: `e10b8a6a42849dfcab915ab451903e634ef607ee37249579c46f48fb0452b811`
 - Release tag: `store-9NGJC64ZM2BP-1.0.0.0`
+- Recovered source commit: [`58eac6cc7403bf90ca9b5e603004c63d6a957f4e`](https://github.com/smmoulder/Local_Calculator/commit/58eac6cc7403bf90ca9b5e603004c63d6a957f4e)
+- Original historical producer commit: unavailable; the original working tree was uncommitted. The recovered commit records the verified source after the build.
 
 ## Provenance and limitations
 
@@ -31,3 +33,5 @@ The working directory was backed up before reconciliation and left unchanged. Re
 See [Windows build instructions](../../../BUILD-WINDOWS.md). Download the exact binary and listing assets from the tagged GitHub Release, then run `python scripts/verify-submission.py PATH_TO_APPX` from the archived source checkout. `SHA256SUMS.txt` and `AppxManifest.xml` in this directory describe the original upload. `provenance.json` is the machine-readable record.
 
 This record documents an existing submission. It neither publishes another Store update nor claims a completed Windows App Certification Kit report; the earlier SDK layout attempt exited with code 1001. Native launch, calculation/theme controls, metadata loading and subsequent real app screenshots were observed in this chat, but those are not a substitute for formal certification results.
+
+Recovery validation: the six existing test scripts and desktop coffee/external-link tests passed on October 21, 2026. The archive verification script passed against the unchanged original APPX and the recovered runtime files. A new package was not built.

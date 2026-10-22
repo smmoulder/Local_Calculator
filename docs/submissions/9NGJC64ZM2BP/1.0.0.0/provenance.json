@@ -16,7 +16,7 @@
   "originalBuildCommit": null,
   "originalBuildBaseCommit": "a1158f07caee613425b709f1fabc0e45d6089adb",
   "originalBuildState": "Uncommitted Windows desktop changes on top of the base commit. No historical committed producer can be asserted.",
-  "recoveredSourceCommit": null,
+  "recoveredSourceCommit": "58eac6cc7403bf90ca9b5e603004c63d6a957f4e",
   "runtimeAsarSha256": "09a10e90d30be7f51926ac16637e717e2768cd44a1400846017e7b29de51057b",
   "portalVerification": {
     "url": "https://partner.microsoft.com/en-us/dashboard/products/9NGJC64ZM2BP/submissions/1152921505702187975/packages",
