@@ -21,7 +21,6 @@
     },
     "files": [
       "dist/**/*",
-      "desktop/assets/icon.ico",
       "desktop/main.cjs",
       "desktop/links.cjs",
       "package.json"
@@ -33,7 +32,13 @@
     },
     "portable": {
       "artifactName": "Local-AI-Workbench-${version}-${arch}.exe"
-    }
+    },
+    "extraResources": [
+      {
+        "from": "desktop/assets/icon.ico",
+        "to": "icon.ico"
+      }
+    ]
   },
   "devDependencies": {
     "electron": "44.9.3",
