@@ -54,3 +54,9 @@ Source/runtime equivalence is verified, but byte-for-byte reproducibility of a f
 ## Preserved newer work
 
 The public `PRIVACY.md` committed after desktop construction remains authoritative. The earlier `PRIVACY.txt` and `STORE-SUBMISSION.txt` are historical drafts/preparation notes; their pending checklists are not current Store status. Store screenshots and later logo artwork are provided as Release assets. None of these listing/privacy changes alter the recovered app behavior.
+
+## Current icon build verification (October 21, 2026)
+
+Setup started from archive commit `23a34701d66a420338af538a5b68e6ddf823f1d2` on main. Node.js 24.21.0/npm 12.1.0 installed the pinned dependencies with `npm ci`; all existing tests passed before and after the icon change. `npm run build:win` completed. The built executable's associated icon was extracted and visually confirmed to contain the mint calculator artwork. Historical `build/` assets and submission records were unchanged.
+
+Native launch could not be fully verified on this computer: the first attempt exited after an Electron disk-cache access-denied message; an isolated user-data directory also exited without a persistent app window. No taskbar/window visual verification is claimed. Dependency installation reported eight moderate audit findings and a blocked optional electron-winstaller install script; dependencies were not upgraded during this scoped icon change. The ZIP build succeeded despite that optional script limitation. No Store package was submitted or historical release asset replaced.
