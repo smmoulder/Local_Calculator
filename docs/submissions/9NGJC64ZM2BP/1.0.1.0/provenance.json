@@ -1,0 +1,10 @@
+{
+  "productId": "9NGJC64ZM2BP",
+  "version": "1.0.1.0",
+  "sourceCommit": "5ff89145f5f88896c416eea69f685bf2ed071fa4",
+  "filename": "Local-Model-Calculator-1.0.1-x64.appx",
+  "bytes": 164019259,
+  "sha256": "4e71da95d1a6b65016f889ce0c861b661733abea68bdb0a5e2287ef7797d612f",
+  "status": "Prepared; not submitted or certified",
+  "verified": "ZIP integrity, identity, version, package tile bytes and packaged window icon bytes"
+}
