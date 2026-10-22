@@ -11,7 +11,7 @@ else {
   app.whenReady().then(() => {
     window = new BrowserWindow({
       width: 1360, height: 940, minWidth: 760, minHeight: 600,
-      title: 'Local AI Workbench', icon: path.join(__dirname, '../build/icon.ico'),
+      title: 'Local AI Workbench', icon: path.join(__dirname, 'assets/icon.ico'),
       show: false, backgroundColor: '#f7f7f2',
       webPreferences: {nodeIntegration: false, contextIsolation: true, sandbox: true, webSecurity: true}
     });

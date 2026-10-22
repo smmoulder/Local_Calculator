@@ -31,7 +31,7 @@ This checks its complete SHA-256, file length, ZIP integrity, manifest, embedded
 
 ## Build from source
 
-Exact original package artwork is checked in under `build/`. **Do not regenerate it to verify Submission 1.** `build-assets.ps1` is the original generator, retained for reference; running it can vary raster output with Windows font/rendering versions. The later mint calculator/chip icons under `assets/store-listing/` are listing artwork and are not the submitted executable/package icons.
+Exact original package artwork is checked in under `build/`. **Do not regenerate it to verify Submission 1.** Current development builds use the mint calculator artwork in `desktop/assets/`, generated from the preserved 300px listing icon with `npm run icons`. The window icon, executable resource, and future APPX tiles all use these current assets. This does not alter the archived 1.0.0.0 upload. `build-assets.ps1` is the original generator, retained for reference; running it can vary raster output with Windows font/rendering versions. The mint calculator/chip icons under `assets/store-listing/` remain unchanged. They were not the historical submission icons; they now also supply artwork for future development builds.
 
 ```powershell
 npm ci

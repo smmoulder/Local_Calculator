@@ -13,7 +13,7 @@ includes its runtime. End users do not need Node.js or a web server. Extract
 the Windows ZIP completely and launch `Local AI Workbench.exe`.
 
 Developers: install Node.js LTS, run `npm ci`, then
-`powershell -File build-assets.ps1`, `npm test`, and `npm run build:win`.
+`npm run icons`, `npm test`, and `npm run build:win`.
 `npm start` launches the development app. `npm run build:store` creates an
 APPX package for the reserved **Local Model Calculator** product using the
 verified Partner Center identity in `desktop/store-identity.json`.

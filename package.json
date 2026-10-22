@@ -9,25 +9,27 @@
     "start": "electron .",
     "test": "node test.cjs && node test-dxdiag.cjs && node test-spx.cjs && node test-recs.cjs && node test-unified.cjs && node test-discovery.cjs && node --test desktop/test.cjs",
     "build:win": "electron-builder --win zip --x64",
-    "build:store": "node desktop/build-store.cjs"
+    "build:store": "node desktop/build-store.cjs",
+    "icons": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-app-icons.ps1"
   },
   "build": {
     "appId": "com.smmoulder.localaiworkbench",
     "productName": "Local AI Workbench",
     "directories": {
-      "output": "release"
+      "output": "release",
+      "buildResources": "desktop/assets"
     },
     "files": [
       "dist/**/*",
-      "build/icon.ico",
+      "desktop/assets/icon.ico",
       "desktop/main.cjs",
       "desktop/links.cjs",
       "package.json"
     ],
     "win": {
       "target": "portable",
-      "icon": "build/icon.ico",
-      "signAndEditExecutable": false
+      "icon": "desktop/assets/icon.ico",
+      "signAndEditExecutable": true
     },
     "portable": {
       "artifactName": "Local-AI-Workbench-${version}-${arch}.exe"
