@@ -1,5 +1,7 @@
 # Local AI Workbench
 
+**Resuming on another computer? Read [HANDOFF.md](HANDOFF.md) first.**
+
 The Windows sources and original Store Submission 1 package are archived for
 **Local Model Calculator** (`9NGJC64ZM2BP`). See
 [Windows build and continuation instructions](docs/BUILD-WINDOWS.md) and the
