@@ -1,6 +1,6 @@
 {
   "name": "local-ai-workbench",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Plan local AI model memory and explore GGUF models.",
   "author": "smmoulder",
   "private": true,
